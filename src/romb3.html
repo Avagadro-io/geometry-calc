@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/bootsrap.min.css">
+    <style>
+        .formula {
+            margin-top: 20px;
+            height: 60px;
+            object-fit: contain;
+        }
+        .chozuji {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        .answers p {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app">
+        <button class="btn btn-info" @click.prevent="showSolver">Solver</button>
+        <button class="btn btn-info" @click.prevent="showFormulas">Formulas</button>
+
+        <form class="chozuji" action="#" method="POST" role="form" v-if="solver">
+            <div class="form-group">
+                <label for="">a</label>
+                <input type="number" class="form-control" v-model="a" placeholder="enter a">
+            </div>
+            <div class="form-group">
+                <label for="">α˚</label>
+                <input type="number" class="form-control" v-model="alpha" placeholder="enter α˚">
+            </div>
+        </form>
+
+        <div class="answers" v-if="solver">
+            <p>
+                Area = <span>{{ area }}</span>
+            </p>
+            <p>
+                Perimetr = <span>{{ perimetr }}</span>
+            </p>
+            <p>
+                Diagonal1 = <span>{{ diagonal1 }}</span>
+            </p>
+            <p>
+                Diagonal2 = <span>{{ diagonal2 }}</span>
+            </p>
+            <p>
+                Height = <span>{{ height }}</span>
+            </p>
+            <p>
+                β˚ = <span>{{ beta }}</span>
+            </p>
+        </div>
+
+        <div class="row" v-if="!solver">
+            <div class="col-md-4">
+                Area: <img src="../images/romb3/1.png" class="formula">
+            </div>
+            <div class="col-md-4">
+                Perimetr: <img src="../images/romb3/2.png" class="formula">
+            </div>
+            <div class="col-md-4">
+                Diagonal1: <img src="../images/romb3/3.png" class="formula">
+            </div>
+            <div class="col-md-4">
+                Diagonal2: <img src="../images/romb3/4.png" class="formula">
+            </div>
+            <div class="col-md-4">
+                Beyiklik: <img src="../images/romb3/5.png" class="formula">
+            </div>
+            <div class="col-md-4">
+                Beta angle: <img src="../images/romb3/6.png" class="formula">
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                solver: true,
+                area: '',
+                perimetr: '',
+                diagonal1: '',
+                diagonal2: '',
+                height: '',
+                beta: '',
+                a: '',
+                alpha: '',
+            },
+            watch: {
+                a() {
+                    this.a = parseInt(this.a);
+                    this.solve();
+                },
+                alpha() {
+                    this.alpha = parseInt(this.alpha);
+                    this.solve();
+                },
+            },
+            methods: {
+                showSolver() {
+                    this.solver = true
+                },
+                showFormulas() {
+                    this.solver = false
+                },
+                solve() {
+                    this.area = Math.pow(this.a, 2) * Math.sin((this.a * Math.PI) / 180);
+                    this.perimetr = 4 * this.a;
+                    this.diagonal1 = 2 * this.a * Math.cos((this.a / 2 * Math.PI) / 180);
+                    this.diagonal2 = 2 * this.a * Math.sin((this.a / 2 * Math.PI) / 180);
+                    this.height = this.a * Math.sin((this.a * Math.PI) / 180);
+                    this.beta = 180 - this.a;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
